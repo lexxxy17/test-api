@@ -2,6 +2,8 @@ import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import { db, upsertUser, getUser, listUserIds, getSessionRow, setSessionRow, deleteSessionRow, getCompletionRow, setCompletionRow, deleteCompletionRow } from './src/db.js'
+import https from 'https';
+import fs from 'fs';
 
 const app = express()
 const PORT = Number(process.env.PORT || 3000)
@@ -9,6 +11,12 @@ const ADMIN_KEY = process.env.ADMIN_KEY || 'ad777'
 const BOT_KEY = process.env.BOT_KEY || process.env.ADMIN_KEY || 'ad777'
 
 app.use(bodyParser.json({ limit: '10mb' }))
+
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/ai.lingofast.fun/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/ai.lingofast.fun/fullchain.pem'),
+};
+
 
 // Basic CORS for admin API
 const allowCors = (req, res) => {
@@ -118,3 +126,8 @@ app.put('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) return; 
 app.delete('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) return; deleteCompletionRow(String(req.params.id)); res.json({ ok: true }) })
 
 app.listen(PORT, () => console.log(`API server listening on ${PORT}`))
+
+https.createServer(options, app).listen(3000, () => {
+  console.log('HTTPS сервер запущен на 3000 порту');
+});
+
