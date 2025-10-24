@@ -6,7 +6,7 @@ import https from 'https';
 import fs from 'fs';
 
 const app = express()
-const PORT = Number(process.env.PORT || 3000)
+const PORT = Number(process.env.PORT || 8080)
 const ADMIN_KEY = process.env.ADMIN_KEY || 'ad777'
 const BOT_KEY = process.env.BOT_KEY || process.env.ADMIN_KEY || 'ad777'
 
@@ -127,7 +127,7 @@ app.delete('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) retur
 
 app.listen(PORT, () => console.log(`API server listening on ${PORT}`))
 
-https.createServer(options, app).listen(3000, () => {
-  console.log('HTTPS сервер запущен на 3000 порту');
+https.createServer(options, app).listen(8080, () => {
+  console.log('HTTPS сервер запущен на 8080 порту');
 });
 
