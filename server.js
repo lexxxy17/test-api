@@ -127,7 +127,7 @@ app.delete('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) retur
 
 app.listen(PORT, () => console.log(`API server listening on ${PORT}`))
 
-https.createServer(options, app).listen(8080, () => {
-  console.log('HTTPS сервер запущен на 8080 порту');
+https.createServer(options, app).listen(3000, () => {
+  console.log('HTTPS сервер запущен на 3000 порту');
 });
 
