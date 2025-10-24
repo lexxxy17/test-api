@@ -125,7 +125,6 @@ app.get('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) return; 
 app.put('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) return; const { expiresAt } = req.body || {}; setCompletionRow(String(req.params.id), expiresAt ?? null); res.json({ ok: true }) })
 app.delete('/api/completion/:id', (req, res) => { if (!checkBot(req, res)) return; deleteCompletionRow(String(req.params.id)); res.json({ ok: true }) })
 
-app.listen(PORT, () => console.log(`API server listening on ${PORT}`))
 
 https.createServer(options, app).listen(3001, () => {
   console.log('HTTPS сервер запущен на 3001 порту');
